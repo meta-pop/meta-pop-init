@@ -1,27 +1,47 @@
-# Basic API routes example
+# MetaPop初始化时引用的库
+ - Nextjs(Layout, Guard, _app, _document, public)
+ - typescript
+ - tailwind(样式框架)
+ - daisyui(配合tailwind的主题样式)
+ - lingui(i18n)
+ - redux/@reduxjs/toolkit
+ - redux-persist(redux持久化配置)
+ - babel
+ - eslint(js验证和格式化)
+ - prettier(还未验证是否已经生效)
+ - cross-env(读取env文件)
 
-Next.js ships with [API routes](https://nextjs.org/docs/api-routes/introduction) which provides an easy solution to build your own `API`. This example shows how to create multiple `API` endpoints with serverless functions, which can execute independently.
+# 需要编写的例子
+ - 如何使用Guard
+ - 引用services(配合axios做header的认证)
+ - 目录结构说明
+ - commitlint
+ - husky
+ - 如何切换多语言
 
-## Deploy your own
+# 切换多语言
+ - const { locale, locales, asPath, push } = useRouter()
+ - push(asPath, undefined, { locale: l })
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/api-routes)
+# 文件目录说明
+- components 公用组件
+- config 配置文件
+- constants 合约相关
+- features 每个 pages 对应的组件
+- functions 工具函数
+- guards 只有一个网络守卫
+- hooks react hooks
+- layouts 布局类
+- pages 页面
+- services 一些网络服务
+- state redux
+- styles 样式
+- types typescript定义
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/api-routes&project-name=api-routes&repository-name=api-routes)
+# 其他
+ - UI- https://daisyui.com/
+ - CSS框架- https://tailwindcss.com/
+ - UI小组件- https://headlessui.dev/
+ - ICON- https://heroicons.com/
+ - http请求-https://swr.vercel.app/zh-CN
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example api-routes api-routes-app
-```
-
-```bash
-yarn create next-app --example api-routes api-routes-app
-```
-
-```bash
-pnpm create next-app --example api-routes api-routes-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).

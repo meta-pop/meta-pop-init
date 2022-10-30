@@ -1,6 +1,7 @@
-import { NextApiResponse, NextApiRequest } from 'next'
+import { NextApiRequest,NextApiResponse } from 'next'
+
 import { people } from '../../../data'
-import { Person } from '../../../interfaces'
+import { Person } from '../../../types'
 
 export default function handler(
   _req: NextApiRequest,
