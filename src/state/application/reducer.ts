@@ -8,11 +8,11 @@ export interface ApplicationState {
 }
 
 const initialState: ApplicationState = {
-  isDarkMode: false,
-  theme: 'lofi',
+  isDarkMode: true,
+  theme: 'dark',
 }
 
-export default createReducer(initialState, (builder) =>
+export default createReducer(initialState, (builder: any) =>
   builder
     .addCase(updateTheme, (state, { payload: { theme } }) => {
       state.theme = theme

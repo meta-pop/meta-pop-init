@@ -2,7 +2,7 @@
  - Nextjs(Layout, Guard, _app, _document, public)
  - typescript
  - tailwind(样式框架)
- - daisyui(配合tailwind的主题样式)
+ - daisyui(配合tailwind的主题样式)  → flowbite
  - lingui(i18n)
  - redux/@reduxjs/toolkit
  - redux-persist(redux持久化配置)
@@ -39,7 +39,7 @@
 - types typescript定义
 
 # 其他
- - UI- https://daisyui.com/
+ - UI- https://flowbite.com/
  - CSS框架- https://tailwindcss.com/
  - UI小组件- https://headlessui.dev/
  - ICON- https://heroicons.com/

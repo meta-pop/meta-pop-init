@@ -1,8 +1,11 @@
 import { useTheme } from "app/state/application/hooks";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-// @ts-ignore TYPE NEEDS FIXING
-const Layout = ({ children }) => {
+type Props = {
+  children?: JSX.Element | JSX.Element[];
+};
+
+const Layout: FC<Props> = ({ children }) : JSX.Element => {
   const theme = useTheme();
   useEffect(() => {
     const html = document.documentElement;
@@ -10,7 +13,7 @@ const Layout = ({ children }) => {
   }, [theme]);
 
   return (
-    <div className="z-0 flex flex-col items-center w-full h-screen bg-[#F5F5F5]">
+    <div className="z-0 flex flex-col items-center w-full bg-neutral">
       {children}
     </div>
   );

@@ -20,7 +20,6 @@ export default function Document() {
         <meta name="description" content={APP_DESCRIPTION} />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#0993ec" />
 
         {/* <link rel="apple-touch-icon" sizes="16x16" href="/icons/icon-16x16.png" />
         <link rel="apple-touch-icon" sizes="32x32" href="/icons/icon-32x32.png" />

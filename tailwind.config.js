@@ -1,29 +1,31 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * @type {import('@types/tailwindcss/tailwind-config').TailwindConfig}
+ */
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./node_modules/flowbite/**/*.js",
+    "./node_modules/flowbite-react/**/*.js",
+    "./public/**/*.html",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     extend: {},
   },
-  plugins: [require("tailwindcss-border-gradient-radius"), require("daisyui")],
+  plugins: [require("daisyui"), require("flowbite/plugin")],
   daisyui: {
     styled: true,
-    // themes: true,
     themes: [
       {
-        // 覆盖主题，使用lofi主题
-        lofi: {
-          ...require("daisyui/src/colors/themes")["[data-theme=lofi]"],
-          // // 主色蓝色
-          // primary: "#1E9BD4",
-          // // 按钮的黑色
-          // secondary: "#002029",
-          // // #1DFBD3 绿色
-          // "secondary-content": "#1DFBD3",
-          // // 中性色，灰色按钮
-          // neutral: "#B5B5B5",
-          // "neutral-content": "#FFFFFF",
-          // // 背景色
-          // "base-200": "#F5F5F5",
+        metapop: {
+          "primary": "#3B6BE6",
+          "secondary": "#D926A9",
+          "accent": "#1FB2A6",
+          "neutral": "#1B1C21",
+          "base-100": "#20202B",
+          "info": "#3ABFF8",
+          "success": "#36D399",
+          "warning": "#FBBD23",
+          "error": "#F87272",
         },
       },
     ],
@@ -32,6 +34,5 @@ module.exports = {
     logs: true,
     rtl: false,
     prefix: "",
-    // darkTheme: "dark",
   },
 };
