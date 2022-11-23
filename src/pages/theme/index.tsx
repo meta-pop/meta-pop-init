@@ -1,14 +1,222 @@
 // import { useTheme } from 'app/state/application/hooks'
 // import { useEffect } from 'react'
+import Color from 'color'
+
+type ColorNode = {
+  name: string
+  variable: string
+  value: string | Color
+}
 
 const ThemeGenerator = () => {
   //   const theme = useTheme()
   //   useEffect(() => {}, [theme])
 
+  function getColorValueFromTheme(variable: string) {
+    return Color(`hsl(${getComputedStyle(document.documentElement).getPropertyValue(variable)})`).hex()
+  }
+
+  const requiredColorNames: string[] = [
+    'primary',
+    'secondary',
+    'accent',
+    'neutral',
+    'base-100',
+    'info',
+    'success',
+    'warning',
+    'error',
+  ]
+
+  const colors: ColorNode[] = [
+    {
+      name: 'primary',
+      variable: '--p',
+      value: getColorValueFromTheme('--p'),
+    },
+    {
+      name: 'primary-focus',
+      variable: '--pf',
+      value: getColorValueFromTheme('--pf'),
+    },
+    {
+      name: 'primary-content',
+      variable: '--pc',
+      value: getColorValueFromTheme('--pc'),
+    },
+    {
+      name: 'secondary',
+      variable: '--s',
+      value: getColorValueFromTheme('--s'),
+    },
+    {
+      name: 'secondary-focus',
+      variable: '--sf',
+      value: getColorValueFromTheme('--sf'),
+    },
+    {
+      name: 'secondary-content',
+      variable: '--sc',
+      value: getColorValueFromTheme('--sc'),
+    },
+    {
+      name: 'accent',
+      variable: '--a',
+      value: getColorValueFromTheme('--a'),
+    },
+    {
+      name: 'accent-focus',
+      variable: '--af',
+      value: getColorValueFromTheme('--af'),
+    },
+    {
+      name: 'accent-content',
+      variable: '--ac',
+      value: getColorValueFromTheme('--ac'),
+    },
+    {
+      name: 'neutral',
+      variable: '--n',
+      value: getColorValueFromTheme('--n'),
+    },
+    {
+      name: 'neutral-focus',
+      variable: '--nf',
+      value: getColorValueFromTheme('--nf'),
+    },
+    {
+      name: 'neutral-content',
+      variable: '--nc',
+      value: getColorValueFromTheme('--nc'),
+    },
+    {
+      name: 'base-100',
+      variable: '--b1',
+      value: getColorValueFromTheme('--b1'),
+    },
+    {
+      name: 'base-200',
+      variable: '--b2',
+      value: getColorValueFromTheme('--b2'),
+    },
+    {
+      name: 'base-300',
+      variable: '--b3',
+      value: getColorValueFromTheme('--b3'),
+    },
+    {
+      name: 'base-content',
+      variable: '--bc',
+      value: getColorValueFromTheme('--bc'),
+    },
+    {
+      name: 'info',
+      variable: '--in',
+      value: getColorValueFromTheme('--in'),
+    },
+    {
+      name: 'info-content',
+      variable: '--inc',
+      value: getColorValueFromTheme('--inc'),
+    },
+    {
+      name: 'success',
+      variable: '--su',
+      value: getColorValueFromTheme('--su'),
+    },
+    {
+      name: 'success-content',
+      variable: '--suc',
+      value: getColorValueFromTheme('--suc'),
+    },
+    {
+      name: 'warning',
+      variable: '--wa',
+      value: getColorValueFromTheme('--wa'),
+    },
+    {
+      name: 'warning-content',
+      variable: '--wac',
+      value: getColorValueFromTheme('--wac'),
+    },
+    {
+      name: 'error',
+      variable: '--er',
+      value: getColorValueFromTheme('--er'),
+    },
+    {
+      name: 'error-content',
+      variable: '--erc',
+      value: getColorValueFromTheme('--erc'),
+    },
+  ]
+
+  function darken(name: string, variable: string, source: string, percentage = 0.2): ColorNode {
+    return {
+      name: name,
+      variable: variable,
+      value: Color(colors.find((item) => item.name === source)!.value)
+        .darken(percentage)
+        .hex(),
+    }
+  }
+
+  function contrastMaker(name: string, variable: string, source: string, percentage = 0.8): ColorNode {
+    const currentColor: ColorNode = colors.find((item) => item.name === source)!
+    const mixColor = Color(currentColor.value).isDark() ? 'white' : 'black'
+    return {
+      name: name,
+      variable: variable,
+      value: Color(currentColor.value).mix(Color(mixColor), percentage).saturate(10),
+    }
+  }
+
+  function generateOptionalColors() {
+    let optionalColors = []
+    optionalColors.push(darken("primary-focus", "--pf", "primary"))
+    optionalColors.push(darken("secondary-focus", "--sf", "secondary"))
+    optionalColors.push(darken("accent-focus", "--af", "accent"))
+    optionalColors.push(darken("neutral-focus", "--nf", "neutral"))
+
+    optionalColors.push(darken("base-200", "--b2", "base-100", 0.1))
+    optionalColors.push(darken("base-300", "--b3", "base-100", 0.2))
+    optionalColors.push(contrastMaker("base-content", "--bc", "base-100"))
+
+    optionalColors.push(contrastMaker("primary-content", "--pc", "primary"))
+    optionalColors.push(contrastMaker("secondary-content", "--sc", "secondary"))
+    optionalColors.push(contrastMaker("accent-content", "--ac", "accent"))
+    optionalColors.push(contrastMaker("neutral-content", "--nc", "neutral"))
+
+    optionalColors.push(contrastMaker("info-content", "--inc", "info"))
+    optionalColors.push(contrastMaker("success-content", "--suc", "success"))
+    optionalColors.push(contrastMaker("warning-content", "--wac", "warning"))
+    optionalColors.push(contrastMaker("error-content", "--erc", "error"))
+    return optionalColors
+  }
+
+  function generateColors(newColorToCheck = "transparent") {
+    if (CSS.supports("color", newColorToCheck)) {
+      colors
+        .filter((item) => requiredColorNames.includes(item.name))
+        .forEach((color) => {
+          let hslValue = Color(color.value).hsl().round().array()
+          // wrapper.style.setProperty(color.variable, hslValue[0] + " " + hslValue[1] + "% " + hslValue[2] + "%")
+        })
+      generateOptionalColors().forEach((color) => {
+        let hslValue = Color(color.value).hsl().round().array()
+        // wrapper.style.setProperty(color.variable, hslValue[0] + " " + hslValue[1] + "% " + hslValue[2] + "%")
+      })
+      localStorage.setItem("daisyui-theme-generator-colors", JSON.stringify(colors))
+    } else {
+      console.log(`${newColorToCheck} is not a valid color`)
+    }
+  }
+
   return (
     <div data-theme="metapop">
       <div>
-        <span className="badge relative top-4 bg-primary"></span><span className="font-mono font-bold">primary</span>
+        <span className="badge relative top-4 bg-primary"></span>
+        <span className="font-mono font-bold">primary</span>
       </div>
       <div className="bg-base-300 p-8">
         bg-base-300
@@ -108,9 +316,9 @@ const ThemeGenerator = () => {
 
             {/* radial progress */}
             <div className="flex flex-wrap items-center justify-center gap-3 md:w-1/2">
-              <div className="radial-progress">60%</div>
-              <div className="radial-progress">75%</div>
-              <div className="radial-progress">90%</div>
+              <div className="radial-progress" style="--value:60;--size:3.5rem">60%</div>
+              <div className="radial-progress" style="--value:75;--size:3.5rem">75%</div>
+              <div className="radial-progress" style="--value:90;--size:3.5rem">90%</div>
             </div>
           </div>
         </div>
